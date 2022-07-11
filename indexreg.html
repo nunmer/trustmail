@@ -1,0 +1,67 @@
+<?php
+$link = mysqli_connect("localhost", "root", "", "accountstrust");
+
+if($link === true) {
+	echo("success");
+}
+if($link === false){
+	die("ERROR: Could not connect. " . mysqli_connect_error());
+}
+
+
+if (isset($_POST["registerbutton"])) {
+$email = mysqli_real_escape_string($link, $_REQUEST['email']);
+$password = mysqli_real_escape_string($link, $_REQUEST['password']); 
+$cpassword = mysqli_real_escape_string($link, $_REQUEST['cpassword']); 
+
+
+if ($password==$cpassword){
+		$sql = "INSERT INTO trustreg (user_id, email, password) VALUES 
+		 ('','$email', '$password')";
+		 if (mysqli_query($link, $sql)){
+			 echo "Records added successfully.";
+		 } 
+	}else{
+			 echo "Пароли не совпадают";
+		 }
+ }
+ ?>
+ 
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>TrustMail Registration</title>
+	<link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+	<link rel="icon" href="" type="image/x-icon">
+	<link rel="shortcut icon" href="img/mail-icon.png" type="image/x-icon">
+</head>
+<body>
+
+
+ 
+    <div class="top">
+        <a href="http://akb.nis.edu.kz" target="_blank">Главная</a>
+        <span class="right">
+        <a href="http://akb.nis.edu.kz">
+                <strong></strong>
+            </a>
+        </span>
+    <div class="clr"></div>
+    </div>
+	
+    <div id="login">
+	<br><center><img class="logo" src="img/logo.png" alt="Nazarbaev Intelectual School" title="Nazarbaev Intelectual School"></center></br>
+        <form  method="post">
+            <fieldset class="clearfix">
+                <p><span class="fontawesome-user"></span><input type="text" name="email" value="Логин" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                <p><span class="fontawesome-lock"></span><input type="password" name="password" value="Пароль" onBlur="if(this.value == '') this.value = 'Пароль'" onFocus="if(this.value == 'Пароль') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
+                <p><span class="fontawesome-lock"></span><input type="password" name="cpassword" value="Пароль" onBlur="if(this.value == '') this.value = 'Пароль'" onFocus="if(this.value == 'Пароль') this.value = ''" required></p>    
+  			  <p><input type="submit" name="registerbutton" value="Зарегистрироваться"></p>
+			  
+            </fieldset>
+        </form>
+		<p>Уже есть аккаунт? &nbsp;&nbsp;<a href="index.html">Войти</a><span class="fontawesome-arrow-right"></span></p>
+    </div>
+</body>
+</html>
